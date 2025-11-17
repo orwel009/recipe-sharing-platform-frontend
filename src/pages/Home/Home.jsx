@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import api from "../../api";
 import "./Home.css";
 
 const Home = () => {
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchRecipes = async () => {
+    try {
+      const res = await api.get("/recipes");
+      setRecipes(res.data);
+    } catch (err) {
+      console.error("Error fetching recipes:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
+
   return (
     <div className="home-container">
 
-      {/* HERO SECTION */}
       <section className="hero-section d-flex align-items-center">
         <div className="container text-center">
           <h1 className="hero-title">Discover & Share Amazing Recipes</h1>
@@ -24,7 +42,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CATEGORIES */}
       <section className="categories-section container">
         <h2 className="section-title">Popular Categories</h2>
 
@@ -39,26 +56,39 @@ const Home = () => {
         </div>
       </section>
 
-      {/* FEATURED RECIPES */}
       <section className="featured-section container">
-        <h2 className="section-title">Featured Recipes</h2>
+        <h2 className="section-title">Latest Recipes</h2>
 
-        <div className="row mt-4 g-4">
-          {[1, 2, 3, 4].map((item) => (
-            <div className="col-md-6 col-lg-3" key={item}>
-              <div className="recipe-card">
-                <div className="recipe-img"></div>
-                <h3 className="recipe-title">Delicious Recipe {item}</h3>
-                <p className="recipe-desc">
-                  A short description of the recipe goes here…
-                </p>
-                <a href={`/recipes/${item}`} className="recipe-btn">
-                  View Recipe
-                </a>
+        {loading ? (
+          <p className="loading-text">Loading recipes...</p>
+        ) : recipes.length === 0 ? (
+          <p className="empty-text">No recipes found.</p>
+        ) : (
+          <div className="row mt-4 g-4">
+            {recipes.map((item) => (
+              <div className="col-md-6 col-lg-3" key={item._id}>
+                <div className="recipe-card">
+                  <div className="recipe-img">
+                    <img
+                      src='https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg'
+                      alt={item.title}
+                    />
+                  </div>
+
+                  <h3 className="recipe-title">{item.title}</h3>
+
+                  <p className="recipe-desc">
+                    {item.instructions.substring(0, 60)}...
+                  </p>
+
+                  <a href={`/recipes/${item._id}`} className="recipe-btn">
+                    View Recipe
+                  </a>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
     </div>
