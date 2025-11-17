@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer';
 import Login from './pages/Auth/Login';
 import Signup from './pages/Auth/Signup';
 import ProtectedRoute from './components/ProtectedRoute'
+import ViewRecipe from './pages/ViewRecipe/ViewRecipe';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>} />
+        <Route path="/recipes/:id" element={<ViewRecipe />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<Signup/>} />
       </Routes>
