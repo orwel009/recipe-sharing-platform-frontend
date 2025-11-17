@@ -1,0 +1,101 @@
+.view-container {
+  width: 100%;
+  padding: 40px 0;
+  background: #fafafa;
+  display: flex;
+  justify-content: center;
+}
+
+.recipe-card-full {
+  background: #fff;
+  width: 90%;
+  max-width: 800px;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+.recipe-img-full {
+  width: 100%;
+  height: 300px;
+  background: #ddd url("https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg") center/cover;
+  border-radius: 12px;
+}
+
+.recipe-title-full {
+  font-size: 2.3rem;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.recipe-author {
+  font-size: 1rem;
+  color: #555;
+}
+
+.recipe-date {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.section-block {
+  margin-top: 30px;
+}
+
+.section-title-full {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.ingredients-list {
+  margin-top: 10px;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.instructions-text {
+  margin-top: 10px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.action-buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 15px;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.edit-btn {
+  background: #2196f3;
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background: #0b7dda;
+}
+
+.delete-btn {
+  background: #e53935;
+  color: #fff;
+}
+
+.delete-btn:hover {
+  background: #c62828;
+}
+
+.loading-text {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.8rem;
+  font-weight: bold;
+}

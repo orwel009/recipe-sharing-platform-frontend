@@ -16,7 +16,8 @@ const Signup = () => {
     try {
       const res = await api.post("/auth/register", form);
 
-      localStorage.setItem("authToken", res.data.token);
+      localStorage.setItem("token", res.data.token);
+
 
       alert("Account created!");
       window.location.href = "/";
