@@ -16,7 +16,7 @@ const Login = () => {
     try {
       const res = await api.post("/auth/login", form);
 
-      localStorage.setItem("authToken", res.data.token);
+      localStorage.setItem("token", res.data.token);
 
       window.location.href = "/";
     } catch (err) {

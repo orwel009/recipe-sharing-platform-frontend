@@ -7,6 +7,8 @@ import Login from './pages/Auth/Login';
 import Signup from './pages/Auth/Signup';
 import ProtectedRoute from './components/ProtectedRoute'
 import ViewRecipe from './pages/ViewRecipe/ViewRecipe';
+import AddRecipe from './pages/AddRecipe/AddRecipe';
+import EditRecipe from './pages/EditRecipe/EditRecipe';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path="/recipes/:id" element={<ViewRecipe />} />
+        <Route path="/add-recipes" element={<ProtectedRoute><AddRecipe/></ProtectedRoute>} />
+        <Route path="/edit/:id" element={<ProtectedRoute><EditRecipe /></ProtectedRoute>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<Signup/>} />
       </Routes>
