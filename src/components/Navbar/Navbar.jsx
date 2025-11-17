@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    setIsAuthenticated(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    window.location.href = "/login";
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark custom-nav">
       <div className="container">
@@ -20,18 +32,34 @@ const Navbar = () => {
 
         <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul className="navbar-nav gap-3">
+
             <li className="nav-item">
               <a className="nav-link nav-link-custom" href="/">Home</a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link nav-link-custom" href="/recipes">Recipes</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link nav-link-custom" href="/add">Add Recipe</a>
-            </li>
-            <li className="nav-item">
-              <a className="login-btn" href="/login">Login</a>
-            </li>
+
+            {isAuthenticated && (
+              <>
+                <li className="nav-item">
+                  <a className="nav-link nav-link-custom" href="/my-recipes">My Recipes</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link nav-link-custom" href="/add-recipes">Add Recipe</a>
+                </li>
+
+                <li className="nav-item">
+                  <button className="logout-btn" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </li>
+              </>
+            )}
+
+            {!isAuthenticated && (
+              <li className="nav-item">
+                <a className="login-btn" href="/login">Login</a>
+              </li>
+            )}
+
           </ul>
         </div>
       </div>
