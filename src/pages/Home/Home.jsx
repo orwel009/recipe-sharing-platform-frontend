@@ -9,7 +9,34 @@ const Home = () => {
   const fetchRecipes = async () => {
     try {
       const res = await api.get("/recipes");
-      setRecipes(res.data);
+      const fetchedRecipes = res.data;
+
+      const recipesWithImages = await Promise.all(
+        fetchedRecipes.map(async (recipe) => {
+          try {
+            const title = encodeURIComponent(recipe.title);
+            const imgRes = await fetch(
+              `https://www.themealdb.com/api/json/v1/1/search.php?s=${title}`
+            );
+            const data = await imgRes.json();
+
+            const imageUrl =
+              data.meals && data.meals.length > 0
+                ? data.meals[0].strMealThumb
+                : "https://dummyimage.com/400x250/cccccc/000000.png&text=No+Image";
+
+            return { ...recipe, imageUrl };
+          } catch (err) {
+            console.error(`Error fetching image for ${recipe.title}:`, err);
+            return {
+              ...recipe,
+              imageUrl: "https://dummyimage.com/400x250/cccccc/000000.png&text=No+Image",
+            };
+          }
+        })
+      );
+
+      setRecipes(recipesWithImages);
     } catch (err) {
       console.error("Error fetching recipes:", err);
     } finally {
@@ -30,15 +57,6 @@ const Home = () => {
           <p className="hero-subtitle">
             Explore thousands of recipes from around the world. Cook, save, and enjoy!
           </p>
-
-          <div className="search-wrapper">
-            <input
-              type="text"
-              placeholder="Search recipes..."
-              className="search-input"
-            />
-            <button className="search-btn">Search</button>
-          </div>
         </div>
       </section>
 
@@ -70,8 +88,9 @@ const Home = () => {
                 <div className="recipe-card">
                   <div className="recipe-img">
                     <img
-                      src='https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg'
+                      src={item.imageUrl}
                       alt={item.title}
+                      style={{ width: "100%", height: "150px", objectFit: "cover", borderRadius: "10px" }}
                     />
                   </div>
 
